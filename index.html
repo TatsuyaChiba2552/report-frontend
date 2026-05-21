@@ -299,7 +299,7 @@ onclick="changeMyStatus('🟡 สอนอยู่')">
 <script>
 
 const API_URL =
-"https://report-system-8tmt.onrender.com";
+"https://report-system-88mg.onrender.com";
 
 
 const admins = {
@@ -327,8 +327,6 @@ let reports = [];
 
 let currentAdminPassword = null;
 
-let currentUserReportIndex = null;
-
 
 // โหลดงาน
 async function loadReports(){
@@ -341,12 +339,10 @@ await response.json();
 
 renderReports();
 
-updateTracking();
-
 }
 
 
-// โหลดสถานะแอดมิน
+// โหลดแอดมิน
 async function loadAdmins(){
 
 const response =
@@ -498,7 +494,7 @@ document
 }
 
 
-// Login Admin
+// Login
 function loginAdmin(){
 
 const password =
@@ -541,6 +537,15 @@ document.getElementById("room").value;
 const problem =
 document.getElementById("problem").value;
 
+if(!name || !room || !problem){
+
+alert("กรอกข้อมูลให้ครบ");
+
+return;
+
+}
+
+
 await fetch(API_URL + "/report",{
 
 method:"POST",
@@ -559,11 +564,10 @@ problem
 
 });
 
+
 document.getElementById("name").value="";
 document.getElementById("room").value="";
 document.getElementById("problem").value="";
-
-loadReports();
 
 openTracking();
 
@@ -598,6 +602,8 @@ admins[currentAdminPassword]
 
 loadReports();
 
+loadAdmins();
+
 }
 
 
@@ -629,6 +635,8 @@ admins[currentAdminPassword]
 
 loadReports();
 
+loadAdmins();
+
 }
 
 
@@ -656,35 +664,6 @@ status
 });
 
 loadAdmins();
-
-}
-
-
-// Tracking
-function updateTracking(){
-
-if(currentUserReportIndex==null)
-return;
-
-const report =
-reports[currentUserReportIndex];
-
-if(!report)
-return;
-
-document
-.getElementById("trackingStatus")
-.innerText =
-report.status;
-
-document
-.getElementById("trackingAdmin")
-.innerText =
-report.admin
-? "👨‍🔧 " +
-report.admin +
-" กำลังไปหา"
-: "";
 
 }
 
