@@ -19,38 +19,135 @@ box-sizing:border-box;
 font-family:sans-serif;
 }
 
-body{
-background:#0f172a;
-color:white;
-padding:20px;
+:root{
+
+--bg1:#021b2b;
+--bg2:#033b5c;
+
+--card:rgba(255,255,255,0.08);
+
+--text:#e0f7ff;
+--sub:#9fd8ea;
+
+--blue:#38bdf8;
+--cyan:#22d3ee;
+--green:#2dd4bf;
+--red:#f87171;
+--yellow:#facc15;
+
 }
 
+body{
+
+background:
+linear-gradient(
+180deg,
+var(--bg1),
+var(--bg2)
+);
+
+min-height:100vh;
+
+color:var(--text);
+
+padding:20px;
+
+overflow-x:hidden;
+
+}
+
+
+/* เอฟเฟกต์คลื่น */
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+width:200%;
+height:200%;
+
+top:-50%;
+left:-50%;
+
+background:
+
+radial-gradient(
+circle,
+rgba(34,211,238,0.08),
+transparent 60%
+);
+
+animation:
+wave 12s linear infinite;
+
+z-index:-1;
+
+}
+
+@keyframes wave{
+
+0%{
+transform:rotate(0deg);
+}
+
+100%{
+transform:rotate(360deg);
+}
+
+}
+
+
 .main-layout{
+
 display:flex;
+
 gap:20px;
+
 align-items:flex-start;
+
 }
 
 @media(max-width:768px){
 
 .main-layout{
+
 flex-direction:column;
+
 }
 
 }
+
+
+.container,
+.status-panel{
+
+background:var(--card);
+
+backdrop-filter:blur(15px);
+
+border:1px solid
+rgba(255,255,255,0.1);
+
+border-radius:25px;
+
+box-shadow:
+
+0 0 25px
+rgba(34,211,238,0.15);
+
+padding:25px;
+
+}
+
 
 .container{
 flex:1;
-background:#1e293b;
-padding:25px;
-border-radius:20px;
 }
 
 .status-panel{
 width:300px;
-background:#1e293b;
-padding:20px;
-border-radius:20px;
 }
 
 @media(max-width:768px){
@@ -61,86 +158,270 @@ width:100%;
 
 }
 
+
 h1,h2{
+
+text-align:center;
+
 margin-bottom:20px;
+
+color:var(--cyan);
+
+text-shadow:
+0 0 10px
+rgba(34,211,238,0.5);
+
 }
+
 
 button{
+
 width:100%;
-padding:12px;
+
+padding:14px;
+
 border:none;
-border-radius:12px;
+
+border-radius:15px;
+
 margin-top:10px;
+
 cursor:pointer;
-color:white;
+
 font-size:16px;
+
+font-weight:bold;
+
+transition:0.25s;
+
+color:white;
+
 }
+
+
+button:hover{
+
+transform:translateY(-2px)
+scale(1.02);
+
+filter:brightness(1.1);
+
+}
+
 
 .main-btn{
-background:#0ea5e9;
+
+background:
+linear-gradient(
+90deg,
+var(--blue),
+var(--cyan)
+);
+
+box-shadow:
+0 0 15px
+rgba(34,211,238,0.4);
+
 }
+
 
 .accept-btn{
-background:#22c55e;
+
+background:
+linear-gradient(
+90deg,
+#10b981,
+#2dd4bf
+);
+
+box-shadow:
+0 0 15px
+rgba(45,212,191,0.4);
+
 }
+
 
 .delete-btn{
-background:#ef4444;
+
+background:
+linear-gradient(
+90deg,
+#ef4444,
+#f87171
+);
+
+box-shadow:
+0 0 15px
+rgba(248,113,113,0.4);
+
 }
+
 
 .teach-btn{
-background:#eab308;
+
+background:
+linear-gradient(
+90deg,
+#eab308,
+#fde047
+);
+
+color:#222;
+
+box-shadow:
+0 0 15px
+rgba(250,204,21,0.4);
+
 }
 
-input, textarea{
+
+input,
+textarea{
+
 width:100%;
-padding:12px;
-border:none;
-border-radius:10px;
+
+padding:14px;
+
 margin-top:10px;
-background:#334155;
-color:white;
+
+border:none;
+
+border-radius:15px;
+
+background:
+rgba(255,255,255,0.08);
+
+color:var(--text);
+
+outline:none;
+
+font-size:15px;
+
+border:1px solid
+rgba(255,255,255,0.08);
+
 }
+
+
+input::placeholder,
+textarea::placeholder{
+
+color:var(--sub);
+
+}
+
 
 textarea{
+
 height:120px;
+
 resize:none;
+
 }
+
 
 .hidden{
 display:none;
 }
 
+
 table{
+
 width:100%;
+
 border-collapse:collapse;
+
 margin-top:20px;
+
+overflow:hidden;
+
+border-radius:20px;
+
 }
 
-th,td{
-border:1px solid #475569;
-padding:12px;
-text-align:center;
+
+th{
+
+background:
+rgba(34,211,238,0.2);
+
+padding:14px;
+
+color:var(--cyan);
+
 }
+
 
 td{
-background:#334155;
+
+background:
+rgba(255,255,255,0.05);
+
+padding:12px;
+
+text-align:center;
+
+border-bottom:
+1px solid
+rgba(255,255,255,0.05);
+
 }
+
 
 .admin-card{
-background:#334155;
-padding:12px;
-border-radius:12px;
-margin-bottom:10px;
+
+background:
+rgba(255,255,255,0.05);
+
+padding:15px;
+
+border-radius:18px;
+
+margin-bottom:12px;
+
+border:1px solid
+rgba(255,255,255,0.05);
+
+box-shadow:
+0 0 10px
+rgba(34,211,238,0.1);
+
 }
 
+
 .track-box{
-background:#334155;
-padding:20px;
-border-radius:20px;
+
+background:
+rgba(255,255,255,0.06);
+
+padding:25px;
+
+border-radius:25px;
+
 text-align:center;
-font-size:22px;
+
+font-size:24px;
+
 font-weight:bold;
+
+border:1px solid
+rgba(255,255,255,0.08);
+
+box-shadow:
+0 0 20px
+rgba(34,211,238,0.15);
+
+}
+
+
+#trackingStatus{
+
+color:#67e8f9;
+
+text-shadow:
+0 0 12px
+rgba(103,232,249,0.6);
+
 }
 
 </style>
