@@ -28,6 +28,7 @@ padding:20px;
 .main-layout{
 display:flex;
 gap:20px;
+align-items:flex-start;
 }
 
 @media(max-width:768px){
@@ -58,6 +59,10 @@ border-radius:20px;
 width:100%;
 }
 
+}
+
+h1,h2{
+margin-bottom:20px;
 }
 
 button{
@@ -134,6 +139,8 @@ background:#334155;
 padding:20px;
 border-radius:20px;
 text-align:center;
+font-size:22px;
+font-weight:bold;
 }
 
 </style>
@@ -146,6 +153,7 @@ text-align:center;
 
 <div class="container">
 
+<!-- หน้าแรก -->
 <div id="homePage">
 
 <h1>ระบบแจ้งปัญหา</h1>
@@ -163,6 +171,7 @@ onclick="openAdminLogin()">
 </div>
 
 
+<!-- หน้าแจ้ง -->
 <div id="userPage"
 class="hidden">
 
@@ -174,7 +183,7 @@ placeholder="ชื่อผู้แจ้ง">
 
 <input type="text"
 id="room"
-placeholder="เลขห้อง เช่น 121 122">
+placeholder="เลขห้อง">
 
 <textarea id="problem"
 placeholder="รายละเอียดปัญหา"></textarea>
@@ -192,6 +201,7 @@ onclick="goHome()">
 </div>
 
 
+<!-- Tracking -->
 <div id="trackingPage"
 class="hidden">
 
@@ -199,9 +209,9 @@ class="hidden">
 
 <div class="track-box">
 
-<h2 id="trackingStatus">
+<div id="trackingStatus">
 🟡 รอดำเนินการ
-</h2>
+</div>
 
 <div id="trackingAdmin"></div>
 
@@ -215,6 +225,7 @@ onclick="goHome()">
 </div>
 
 
+<!-- Login -->
 <div id="adminLoginPage"
 class="hidden">
 
@@ -239,6 +250,7 @@ onclick="goHome()">
 </div>
 
 
+<!-- Admin -->
 <div id="adminPage"
 class="hidden">
 
@@ -285,6 +297,7 @@ onclick="changeMyStatus('🟡 สอนอยู่')">
 </div>
 
 
+<!-- สถานะแอดมิน -->
 <div class="status-panel">
 
 <h2>สถานะแอดมิน</h2>
@@ -434,6 +447,47 @@ onclick="finishJob(${index})">
 }
 
 
+// Tracking
+function updateTracking(){
+
+const trackingStatus =
+document.getElementById(
+"trackingStatus"
+);
+
+const trackingAdmin =
+document.getElementById(
+"trackingAdmin"
+);
+
+if(reports.length <= 0){
+
+trackingStatus.innerHTML =
+"ไม่มีงาน";
+
+trackingAdmin.innerHTML = "";
+
+return;
+
+}
+
+
+// งานล่าสุด
+const report =
+reports[reports.length - 1];
+
+trackingStatus.innerHTML =
+report.status;
+
+trackingAdmin.innerHTML =
+report.admin
+? "👨‍🔧 " +
+report.admin
+: "";
+
+}
+
+
 // ซ่อนหน้า
 function hideAllPages(){
 
@@ -480,6 +534,8 @@ hideAllPages();
 document
 .getElementById("trackingPage")
 .classList.remove("hidden");
+
+updateTracking();
 
 }
 
@@ -570,6 +626,9 @@ problem
 document.getElementById("name").value="";
 document.getElementById("room").value="";
 document.getElementById("problem").value="";
+
+
+await loadReports();
 
 openTracking();
 
@@ -672,45 +731,6 @@ loadAdmins();
 
 // realtime
 setInterval(()=>{
-
-function updateTracking(){
-
-const trackingStatus =
-document.getElementById(
-"trackingStatus"
-);
-
-const trackingAdmin =
-document.getElementById(
-"trackingAdmin"
-);
-
-if(reports.length <= 0){
-
-trackingStatus.innerHTML =
-"ไม่มีงาน";
-
-trackingAdmin.innerHTML = "";
-
-return;
-
-}
-
-
-// เอางานล่าสุด
-const report =
-reports[reports.length - 1];
-
-trackingStatus.innerHTML =
-report.status;
-
-trackingAdmin.innerHTML =
-report.admin
-? "👨‍🔧 " +
-report.admin
-: "";
-
-}
 
 loadReports();
 
