@@ -339,6 +339,8 @@ await response.json();
 
 renderReports();
 
+updateTracking();
+
 }
 
 
@@ -670,6 +672,45 @@ loadAdmins();
 
 // realtime
 setInterval(()=>{
+
+function updateTracking(){
+
+const trackingStatus =
+document.getElementById(
+"trackingStatus"
+);
+
+const trackingAdmin =
+document.getElementById(
+"trackingAdmin"
+);
+
+if(reports.length <= 0){
+
+trackingStatus.innerHTML =
+"ไม่มีงาน";
+
+trackingAdmin.innerHTML = "";
+
+return;
+
+}
+
+
+// เอางานล่าสุด
+const report =
+reports[reports.length - 1];
+
+trackingStatus.innerHTML =
+report.status;
+
+trackingAdmin.innerHTML =
+report.admin
+? "👨‍🔧 " +
+report.admin
+: "";
+
+}
 
 loadReports();
 
