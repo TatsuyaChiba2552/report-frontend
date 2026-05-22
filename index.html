@@ -56,69 +56,19 @@ overflow-x:hidden;
 
 }
 
-
-/* เอฟเฟกต์คลื่น */
-
-body::before{
-
-content:"";
-
-position:fixed;
-
-width:200%;
-height:200%;
-
-top:-50%;
-left:-50%;
-
-background:
-
-radial-gradient(
-circle,
-rgba(34,211,238,0.08),
-transparent 60%
-);
-
-animation:
-wave 12s linear infinite;
-
-z-index:-1;
-
-}
-
-@keyframes wave{
-
-0%{
-transform:rotate(0deg);
-}
-
-100%{
-transform:rotate(360deg);
-}
-
-}
-
-
 .main-layout{
-
 display:flex;
-
 gap:20px;
-
 align-items:flex-start;
-
 }
 
 @media(max-width:768px){
 
 .main-layout{
-
 flex-direction:column;
-
 }
 
 }
-
 
 .container,
 .status-panel{
@@ -133,14 +83,12 @@ rgba(255,255,255,0.1);
 border-radius:25px;
 
 box-shadow:
-
 0 0 25px
 rgba(34,211,238,0.15);
 
 padding:25px;
 
 }
-
 
 .container{
 flex:1;
@@ -158,7 +106,6 @@ width:100%;
 
 }
 
-
 h1,h2{
 
 text-align:center;
@@ -167,12 +114,7 @@ margin-bottom:20px;
 
 color:var(--cyan);
 
-text-shadow:
-0 0 10px
-rgba(34,211,238,0.5);
-
 }
-
 
 button{
 
@@ -192,22 +134,9 @@ font-size:16px;
 
 font-weight:bold;
 
-transition:0.25s;
-
 color:white;
 
 }
-
-
-button:hover{
-
-transform:translateY(-2px)
-scale(1.02);
-
-filter:brightness(1.1);
-
-}
-
 
 .main-btn{
 
@@ -218,12 +147,7 @@ var(--blue),
 var(--cyan)
 );
 
-box-shadow:
-0 0 15px
-rgba(34,211,238,0.4);
-
 }
-
 
 .accept-btn{
 
@@ -234,12 +158,7 @@ linear-gradient(
 #2dd4bf
 );
 
-box-shadow:
-0 0 15px
-rgba(45,212,191,0.4);
-
 }
-
 
 .delete-btn{
 
@@ -250,12 +169,7 @@ linear-gradient(
 #f87171
 );
 
-box-shadow:
-0 0 15px
-rgba(248,113,113,0.4);
-
 }
-
 
 .teach-btn{
 
@@ -268,12 +182,7 @@ linear-gradient(
 
 color:#222;
 
-box-shadow:
-0 0 15px
-rgba(250,204,21,0.4);
-
 }
-
 
 input,
 textarea{
@@ -293,83 +202,37 @@ rgba(255,255,255,0.08);
 
 color:var(--text);
 
-outline:none;
-
-font-size:15px;
-
-border:1px solid
-rgba(255,255,255,0.08);
-
 }
-
-
-input::placeholder,
-textarea::placeholder{
-
-color:var(--sub);
-
-}
-
 
 textarea{
-
 height:120px;
-
 resize:none;
-
 }
-
 
 .hidden{
 display:none;
 }
 
-
 table{
-
 width:100%;
-
 border-collapse:collapse;
-
 margin-top:20px;
-
-overflow:hidden;
-
-border-radius:20px;
-
 }
-
 
 th{
-
 background:
 rgba(34,211,238,0.2);
-
 padding:14px;
-
-color:var(--cyan);
-
 }
-
 
 td{
-
 background:
 rgba(255,255,255,0.05);
-
 padding:12px;
-
 text-align:center;
-
-border-bottom:
-1px solid
-rgba(255,255,255,0.05);
-
 }
 
-
 .admin-card{
-
 background:
 rgba(255,255,255,0.05);
 
@@ -378,16 +241,7 @@ padding:15px;
 border-radius:18px;
 
 margin-bottom:12px;
-
-border:1px solid
-rgba(255,255,255,0.05);
-
-box-shadow:
-0 0 10px
-rgba(34,211,238,0.1);
-
 }
-
 
 .track-box{
 
@@ -404,24 +258,6 @@ font-size:24px;
 
 font-weight:bold;
 
-border:1px solid
-rgba(255,255,255,0.08);
-
-box-shadow:
-0 0 20px
-rgba(34,211,238,0.15);
-
-}
-
-
-#trackingStatus{
-
-color:#67e8f9;
-
-text-shadow:
-0 0 12px
-rgba(103,232,249,0.6);
-
 }
 
 </style>
@@ -430,11 +266,15 @@ rgba(103,232,249,0.6);
 
 <body>
 
+<audio
+id="notifySound"
+src="sounds/notify.mp3">
+</audio>
+
 <div class="main-layout">
 
 <div class="container">
 
-<!-- หน้าแรก -->
 <div id="homePage">
 
 <h1>ระบบแจ้งปัญหา</h1>
@@ -452,7 +292,6 @@ onclick="openAdminLogin()">
 </div>
 
 
-<!-- หน้าแจ้ง -->
 <div id="userPage"
 class="hidden">
 
@@ -482,7 +321,6 @@ onclick="goHome()">
 </div>
 
 
-<!-- Tracking -->
 <div id="trackingPage"
 class="hidden">
 
@@ -494,8 +332,6 @@ class="hidden">
 🟡 รอดำเนินการ
 </div>
 
-<div id="trackingAdmin"></div>
-
 </div>
 
 <button class="main-btn"
@@ -506,7 +342,6 @@ onclick="goHome()">
 </div>
 
 
-<!-- Login -->
 <div id="adminLoginPage"
 class="hidden">
 
@@ -531,7 +366,6 @@ onclick="goHome()">
 </div>
 
 
-<!-- Admin -->
 <div id="adminPage"
 class="hidden">
 
@@ -578,7 +412,6 @@ onclick="changeMyStatus('🟡 สอนอยู่')">
 </div>
 
 
-<!-- สถานะแอดมิน -->
 <div class="status-panel">
 
 <h2>สถานะแอดมิน</h2>
@@ -593,7 +426,7 @@ onclick="changeMyStatus('🟡 สอนอยู่')">
 <script>
 
 const API_URL =
-"https://report-system-88mg.onrender.com";
+"https://YOUR-RENDER.onrender.com";
 
 
 const admins = {
@@ -606,16 +439,12 @@ name:"Admin1"
 name:"Admin2"
 },
 
-"2580":{
-name:"นาย ธีรศักดิ์"
+"9999":{
+name:"Admin3"
 },
 
-"089":{
-name:"นาย ชาคริต"
-},
-
-"777":{
-name:"นาย ณรงค์พล"
+"0000":{
+name:"Admin4"
 }
 
 };
@@ -623,7 +452,11 @@ name:"นาย ณรงค์พล"
 
 let reports = [];
 
+let lastReportCount = 0;
+
 let currentAdminPassword = null;
+
+let myReportId = null;
 
 
 // โหลดงาน
@@ -634,6 +467,27 @@ await fetch(API_URL + "/reports");
 
 reports =
 await response.json();
+
+
+// เสียงแจ้งเตือน
+if(reports.length > lastReportCount){
+
+if(
+lastReportCount !== 0 &&
+currentAdminPassword
+){
+
+document
+.getElementById("notifySound")
+.play();
+
+}
+
+}
+
+lastReportCount =
+reports.length;
+
 
 renderReports();
 
@@ -732,7 +586,7 @@ onclick="finishJob(${index})">
 }
 
 
-// Tracking
+// Tracking เฉพาะงานตัวเอง
 function updateTracking(){
 
 const trackingStatus =
@@ -740,35 +594,33 @@ document.getElementById(
 "trackingStatus"
 );
 
-const trackingAdmin =
-document.getElementById(
-"trackingAdmin"
-);
-
-if(reports.length <= 0){
+if(!myReportId){
 
 trackingStatus.innerHTML =
 "ไม่มีงาน";
-
-trackingAdmin.innerHTML = "";
 
 return;
 
 }
 
 
-// งานล่าสุด
 const report =
-reports[reports.length - 1];
+reports.find(
+r=>r.id == myReportId
+);
+
+if(!report){
+
+trackingStatus.innerHTML =
+"✅ งานเสร็จแล้ว";
+
+return;
+
+}
+
 
 trackingStatus.innerHTML =
 report.status;
-
-trackingAdmin.innerHTML =
-report.admin
-? "👨‍🔧 " +
-report.admin
-: "";
 
 }
 
@@ -889,6 +741,7 @@ return;
 }
 
 
+const response =
 await fetch(API_URL + "/report",{
 
 method:"POST",
@@ -906,6 +759,15 @@ problem
 })
 
 });
+
+
+const data =
+await response.json();
+
+
+// จำ id งานตัวเอง
+myReportId =
+data.id;
 
 
 document.getElementById("name").value="";
@@ -1021,7 +883,7 @@ loadReports();
 
 loadAdmins();
 
-},5000);
+},3000);
 
 
 loadReports();
