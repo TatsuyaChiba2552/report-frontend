@@ -102,6 +102,10 @@ transform:rotate(360deg);
 }
 
 
+/* =========================
+   DESKTOP
+========================= */
+
 .main-layout{
 
 display:flex;
@@ -112,48 +116,132 @@ align-items:flex-start;
 
 flex:1;
 
-}
-
-
-@media(max-width:768px){
-
-.main-layout{
-
-flex-direction:column;
-
-align-items:center;
+width:100%;
 
 }
-
-}
-
 
 .container{
 
 flex:1;
 
-width:100%;
-max-width:800px;
+min-width:0;
 
 }
 
-
 .status-panel{
 
-width:300px;
+width:320px;
 
 flex-shrink:0;
 
 }
 
 
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:768px){
+
+body{
+
+padding:10px;
+
+}
+
+
+/* เรียงลง */
+
+.main-layout{
+
+flex-direction:column;
+
+gap:15px;
+
+width:100%;
+
+}
+
+
+/* กล่องหลัก */
+
+.container{
+
+width:100%;
+
+max-width:100%;
+
+padding:18px;
+
+}
+
+
+/* สถานะแอดมิน */
 
 .status-panel{
 
 width:100%;
 
-max-width:800px;
+max-width:100%;
+
+padding:18px;
+
+}
+
+
+/* ตารางเลื่อน */
+
+table{
+
+display:block;
+
+overflow-x:auto;
+
+white-space:nowrap;
+
+}
+
+
+/* หัวข้อ */
+
+h1{
+
+font-size:28px;
+
+}
+
+h2{
+
+font-size:24px;
+
+}
+
+
+/* ปุ่ม */
+
+button{
+
+font-size:15px;
+
+padding:13px;
+
+}
+
+
+/* การ์ดแอดมิน */
+
+.admin-card{
+
+padding:14px;
+
+}
+
+
+/* footer */
+
+.footer{
+
+margin-top:20px;
 
 }
 
@@ -459,6 +547,15 @@ box-shadow:
 rgba(34,211,238,0.1);
 
 text-align:center;
+
+}
+
+html,
+body{
+
+max-width:100%;
+
+overflow-x:hidden;
 
 }
 
