@@ -268,6 +268,14 @@ font-weight:bold;
 
 <audio
 id="notifySound"
+preload="auto"
+src="sounds/notify.mp3">
+</audio>
+
+<audio
+id="waitingSound"
+preload="auto"
+loop
 src="sounds/LowCortisol.mp3">
 </audio>
 
@@ -618,6 +626,12 @@ document.getElementById(
 "trackingWarning"
 );
 
+const waitingSound =
+document.getElementById(
+"waitingSound"
+);
+
+
 if(!myReportId){
 
 trackingStatus.innerHTML =
@@ -626,6 +640,10 @@ trackingStatus.innerHTML =
 if(warning)
 warning.style.display =
 "none";
+
+waitingSound.pause();
+
+waitingSound.currentTime = 0;
 
 return;
 
@@ -637,6 +655,7 @@ reports.find(
 r=>r.id == myReportId
 );
 
+
 if(!report){
 
 trackingStatus.innerHTML =
@@ -645,6 +664,10 @@ trackingStatus.innerHTML =
 if(warning)
 warning.style.display =
 "none";
+
+waitingSound.pause();
+
+waitingSound.currentTime = 0;
 
 return;
 
@@ -655,19 +678,31 @@ trackingStatus.innerHTML =
 report.status;
 
 
-if(warning){
-
+// ถ้ายังรอ
 if(report.status.includes("รอดำเนินการ")){
+
+if(warning){
 
 warning.style.display =
 "block";
 
+}
+
+waitingSound.play();
+
 }else{
+
+// แอดรับงานแล้ว
+if(warning){
 
 warning.style.display =
 "none";
 
 }
+
+waitingSound.pause();
+
+waitingSound.currentTime = 0;
 
 }
 
@@ -690,6 +725,16 @@ el.classList.add("hidden");
 
 // หน้าแรก
 function goHome(){
+
+// หยุดเสียงรอ
+const waitingSound =
+document.getElementById(
+"waitingSound"
+);
+
+waitingSound.pause();
+
+waitingSound.currentTime = 0;
 
 hideAllPages();
 
@@ -720,6 +765,17 @@ hideAllPages();
 document
 .getElementById("trackingPage")
 .classList.remove("hidden");
+
+
+// เล่นเสียงรอ
+const waitingSound =
+document.getElementById(
+"waitingSound"
+);
+
+waitingSound.volume = 0.3;
+
+waitingSound.play();
 
 updateTracking();
 
