@@ -332,6 +332,19 @@ class="hidden">
 🟡 รอดำเนินการ
 </div>
 
+<div id="trackingWarning"
+style="
+margin-top:15px;
+font-size:14px;
+color:#fde68a;
+opacity:0.9;
+">
+
+⚠️ อย่าพึ่งออกจากหน้านี้
+จนกว่าจะมีแอดมินรับงาน
+
+</div>
+
 </div>
 
 <button class="main-btn"
@@ -594,10 +607,18 @@ document.getElementById(
 "trackingStatus"
 );
 
+const warning =
+document.getElementById(
+"trackingWarning"
+);
+
 if(!myReportId){
 
 trackingStatus.innerHTML =
 "ไม่มีงาน";
+
+warning.style.display =
+"none";
 
 return;
 
@@ -614,7 +635,30 @@ if(!report){
 trackingStatus.innerHTML =
 "✅ งานเสร็จแล้ว";
 
+warning.style.display =
+"none";
+
 return;
+
+}
+
+
+trackingStatus.innerHTML =
+report.status;
+
+
+// แสดงคำเตือน
+if(report.status.includes("รอดำเนินการ")){
+
+warning.style.display =
+"block";
+
+}else{
+
+warning.style.display =
+"none";
+
+}
 
 }
 
