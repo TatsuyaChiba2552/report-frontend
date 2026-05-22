@@ -54,27 +54,111 @@ padding:20px;
 
 overflow-x:hidden;
 
-
 display:flex;
 flex-direction:column;
 
 }
 
+
+/* เอฟเฟกต์ */
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+width:200%;
+height:200%;
+
+top:-50%;
+left:-50%;
+
+background:
+
+radial-gradient(
+circle,
+rgba(34,211,238,0.08),
+transparent 60%
+);
+
+animation:
+wave 12s linear infinite;
+
+z-index:-1;
+
+}
+
+@keyframes wave{
+
+0%{
+transform:rotate(0deg);
+}
+
+100%{
+transform:rotate(360deg);
+}
+
+}
+
+
 .main-layout{
+
 display:flex;
+
 gap:20px;
+
 align-items:flex-start;
 
 flex:1;
+
 }
+
 
 @media(max-width:768px){
 
 .main-layout{
+
 flex-direction:column;
+
+align-items:center;
+
 }
 
 }
+
+
+.container{
+
+flex:1;
+
+width:100%;
+max-width:800px;
+
+}
+
+
+.status-panel{
+
+width:300px;
+
+flex-shrink:0;
+
+}
+
+
+@media(max-width:768px){
+
+.status-panel{
+
+width:100%;
+
+max-width:800px;
+
+}
+
+}
+
 
 .container,
 .status-panel{
@@ -96,21 +180,6 @@ padding:25px;
 
 }
 
-.container{
-flex:1;
-}
-
-.status-panel{
-width:300px;
-}
-
-@media(max-width:768px){
-
-.status-panel{
-width:100%;
-}
-
-}
 
 h1,h2{
 
@@ -120,7 +189,12 @@ margin-bottom:20px;
 
 color:var(--cyan);
 
+text-shadow:
+0 0 10px
+rgba(34,211,238,0.5);
+
 }
+
 
 button{
 
@@ -140,9 +214,23 @@ font-size:16px;
 
 font-weight:bold;
 
+transition:0.25s;
+
 color:white;
 
 }
+
+
+button:hover{
+
+transform:
+translateY(-2px)
+scale(1.02);
+
+filter:brightness(1.1);
+
+}
+
 
 .main-btn{
 
@@ -153,7 +241,12 @@ var(--blue),
 var(--cyan)
 );
 
+box-shadow:
+0 0 15px
+rgba(34,211,238,0.4);
+
 }
+
 
 .accept-btn{
 
@@ -166,6 +259,7 @@ linear-gradient(
 
 }
 
+
 .delete-btn{
 
 background:
@@ -176,6 +270,7 @@ linear-gradient(
 );
 
 }
+
 
 .teach-btn{
 
@@ -189,6 +284,7 @@ linear-gradient(
 color:#222;
 
 }
+
 
 input,
 textarea{
@@ -208,37 +304,83 @@ rgba(255,255,255,0.08);
 
 color:var(--text);
 
+outline:none;
+
+font-size:15px;
+
+border:1px solid
+rgba(255,255,255,0.08);
+
 }
 
-textarea{
-height:120px;
-resize:none;
+
+input::placeholder,
+textarea::placeholder{
+
+color:var(--sub);
+
 }
+
+
+textarea{
+
+height:120px;
+
+resize:none;
+
+}
+
 
 .hidden{
 display:none;
 }
 
+
 table{
+
 width:100%;
+
 border-collapse:collapse;
+
 margin-top:20px;
+
+overflow:hidden;
+
+border-radius:20px;
+
 }
+
 
 th{
+
 background:
 rgba(34,211,238,0.2);
+
 padding:14px;
+
+color:var(--cyan);
+
 }
+
 
 td{
+
 background:
 rgba(255,255,255,0.05);
+
 padding:12px;
+
 text-align:center;
+
+border-bottom:
+1px solid
+rgba(255,255,255,0.05);
+
 }
 
+
 .admin-card{
+
 background:
 rgba(255,255,255,0.05);
 
@@ -247,7 +389,16 @@ padding:15px;
 border-radius:18px;
 
 margin-bottom:12px;
+
+border:1px solid
+rgba(255,255,255,0.05);
+
+box-shadow:
+0 0 10px
+rgba(34,211,238,0.1);
+
 }
+
 
 .track-box{
 
@@ -264,7 +415,26 @@ font-size:24px;
 
 font-weight:bold;
 
+border:1px solid
+rgba(255,255,255,0.08);
+
+box-shadow:
+0 0 20px
+rgba(34,211,238,0.15);
+
 }
+
+
+#trackingStatus{
+
+color:#67e8f9;
+
+text-shadow:
+0 0 12px
+rgba(103,232,249,0.6);
+
+}
+
 
 /* FOOTER */
 
@@ -333,6 +503,46 @@ opacity:0.9;
 
 }
 
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+body{
+padding:12px;
+}
+
+.container,
+.status-panel{
+
+padding:18px;
+
+border-radius:20px;
+
+}
+
+h1{
+font-size:32px;
+}
+
+button{
+
+padding:13px;
+
+font-size:15px;
+
+}
+
+table{
+font-size:13px;
+}
+
+td,th{
+padding:8px;
+}
+
+}
+
 </style>
 
 </head>
@@ -356,9 +566,11 @@ src="sounds/LowCortisol.mp3">
 
 <div class="container">
 
+<!-- HOME -->
+
 <div id="homePage">
 
-<h1>ระบบแจ้งปัญหา</h1>
+<h1>🌊 ระบบแจ้งปัญหา</h1>
 
 <button class="main-btn"
 onclick="openUserPage()">
@@ -372,6 +584,8 @@ onclick="openAdminLogin()">
 
 </div>
 
+
+<!-- USER -->
 
 <div id="userPage"
 class="hidden">
@@ -401,6 +615,8 @@ onclick="goHome()">
 
 </div>
 
+
+<!-- TRACKING -->
 
 <div id="trackingPage"
 class="hidden">
@@ -436,6 +652,8 @@ onclick="goHome()">
 </div>
 
 
+<!-- LOGIN -->
+
 <div id="adminLoginPage"
 class="hidden">
 
@@ -459,6 +677,8 @@ onclick="goHome()">
 
 </div>
 
+
+<!-- ADMIN -->
 
 <div id="adminPage"
 class="hidden">
@@ -506,6 +726,8 @@ onclick="changeMyStatus('🟡 สอนอยู่')">
 </div>
 
 
+<!-- STATUS PANEL -->
+
 <div class="status-panel">
 
 <h2>สถานะแอดมิน</h2>
@@ -516,9 +738,10 @@ onclick="changeMyStatus('🟡 สอนอยู่')">
 
 </div>
 
-<footer class="footer">
 
-<div class="footer-content">
+<!-- FOOTER -->
+
+<footer class="footer">
 
 <div class="footer-title">
 🌊 ระบบแจ้งปัญหา
@@ -532,8 +755,6 @@ Realtime Support System
 Developed by TEERASAK KHAMIN
 </div>
 
-</div>
-
 </footer>
 
 
@@ -541,7 +762,6 @@ Developed by TEERASAK KHAMIN
 
 const API_URL =
 "https://report-system-88mg.onrender.com";
-
 
 const admins = {
 
@@ -577,6 +797,7 @@ let myReportId = null;
 
 
 // โหลดงาน
+
 async function loadReports(){
 
 const response =
@@ -587,6 +808,7 @@ await response.json();
 
 
 // เสียงแจ้งเตือน
+
 if(reports.length > lastReportCount){
 
 if(
@@ -613,6 +835,7 @@ updateTracking();
 
 
 // โหลดแอดมิน
+
 async function loadAdmins(){
 
 const response =
@@ -652,6 +875,7 @@ list.innerHTML += `
 
 
 // render งาน
+
 function renderReports(){
 
 const table =
@@ -705,6 +929,7 @@ onclick="finishJob(${index})">
 
 
 // Tracking
+
 function updateTracking(){
 
 const trackingStatus =
@@ -772,6 +997,7 @@ report.status;
 
 
 // ถ้ายังรอ
+
 if(report.status.includes("รอดำเนินการ")){
 
 if(warning){
@@ -785,7 +1011,6 @@ waitingSound.play();
 
 }else{
 
-// แอดรับงานแล้ว
 if(warning){
 
 warning.style.display =
@@ -803,6 +1028,7 @@ waitingSound.currentTime = 0;
 
 
 // ซ่อนหน้า
+
 function hideAllPages(){
 
 document.querySelectorAll(
@@ -817,9 +1043,9 @@ el.classList.add("hidden");
 
 
 // หน้าแรก
+
 function goHome(){
 
-// หยุดเสียงรอ
 const waitingSound =
 document.getElementById(
 "waitingSound"
@@ -838,7 +1064,8 @@ document
 }
 
 
-// ผู้ใช้
+// USER PAGE
+
 function openUserPage(){
 
 hideAllPages();
@@ -850,7 +1077,8 @@ document
 }
 
 
-// Tracking
+// TRACKING PAGE
+
 function openTracking(){
 
 hideAllPages();
@@ -859,8 +1087,6 @@ document
 .getElementById("trackingPage")
 .classList.remove("hidden");
 
-
-// เล่นเสียงรอ
 const waitingSound =
 document.getElementById(
 "waitingSound"
@@ -875,7 +1101,8 @@ updateTracking();
 }
 
 
-// Login
+// ADMIN LOGIN
+
 function openAdminLogin(){
 
 hideAllPages();
@@ -887,7 +1114,8 @@ document
 }
 
 
-// Login Admin
+// LOGIN
+
 function loginAdmin(){
 
 const password =
@@ -919,6 +1147,7 @@ document
 
 
 // ส่งแจ้ง
+
 async function sendReport(){
 
 const name =
@@ -977,6 +1206,7 @@ openTracking();
 
 
 // รับงาน
+
 async function acceptJob(index){
 
 const report =
@@ -1010,6 +1240,7 @@ loadAdmins();
 
 
 // งานเสร็จ
+
 async function finishJob(index){
 
 const report =
@@ -1043,6 +1274,7 @@ loadAdmins();
 
 
 // เปลี่ยนสถานะ
+
 async function changeMyStatus(status){
 
 await fetch(API_URL + "/admin-status",{
@@ -1070,7 +1302,8 @@ loadAdmins();
 }
 
 
-// realtime
+// REALTIME
+
 setInterval(()=>{
 
 loadReports();
@@ -1085,3 +1318,6 @@ loadReports();
 loadAdmins();
 
 </script>
+
+</body>
+</html>
