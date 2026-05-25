@@ -136,6 +136,14 @@ flex-shrink:0;
 
 }
 
+html,
+body{
+
+width:100%;
+max-width:100%;
+overflow-x:hidden;
+
+}
 
 /* =========================
    MOBILE
@@ -145,51 +153,98 @@ flex-shrink:0;
 
 body{
 
-padding:10px;
+padding:8px;
 
 }
 
 
-/* เรียงลง */
+/* layout */
 
 .main-layout{
 
 flex-direction:column;
 
-gap:15px;
+gap:12px;
 
 width:100%;
 
 }
 
 
-/* กล่องหลัก */
+/* กล่อง */
 
-.container{
-
-width:100%;
-
-max-width:100%;
-
-padding:18px;
-
-}
-
-
-/* สถานะแอดมิน */
-
+.container,
 .status-panel{
 
 width:100%;
 
 max-width:100%;
 
-padding:18px;
+padding:14px;
+
+border-radius:20px;
 
 }
 
 
-/* ตารางเลื่อน */
+/* หัวข้อ */
+
+h1{
+
+font-size:22px;
+
+margin-bottom:15px;
+
+}
+
+h2{
+
+font-size:20px;
+
+margin-bottom:15px;
+
+}
+
+
+/* ปุ่ม */
+
+button{
+
+padding:12px;
+
+font-size:14px;
+
+border-radius:14px;
+
+}
+
+
+/* input */
+
+input,
+textarea{
+
+padding:12px;
+
+font-size:14px;
+
+border-radius:14px;
+
+}
+
+
+/* tracking */
+
+.track-box{
+
+padding:18px;
+
+font-size:18px;
+
+}
+
+
+/* ตาราง */
 
 table{
 
@@ -199,40 +254,59 @@ overflow-x:auto;
 
 white-space:nowrap;
 
-}
+border-radius:16px;
 
-
-/* หัวข้อ */
-
-h1{
-
-font-size:28px;
-
-}
-
-h2{
-
-font-size:24px;
+margin-top:15px;
 
 }
 
 
-/* ปุ่ม */
+/* หัวตาราง */
 
-button{
+th{
 
-font-size:15px;
+padding:10px;
 
-padding:13px;
+font-size:13px;
 
 }
 
 
-/* การ์ดแอดมิน */
+/* ข้อมูล */
+
+td{
+
+padding:10px;
+
+font-size:13px;
+
+}
+
+
+/* ปุ่มในตาราง */
+
+td button{
+
+min-width:90px;
+
+font-size:12px;
+
+padding:10px;
+
+}
+
+
+/* card admin */
 
 .admin-card{
 
-padding:14px;
+padding:12px;
+
+border-radius:16px;
+
+margin-bottom:10px;
+
+font-size:14px;
 
 }
 
@@ -241,7 +315,42 @@ padding:14px;
 
 .footer{
 
-margin-top:20px;
+margin-top:15px;
+
+padding:15px;
+
+border-radius:18px;
+
+}
+
+.footer-title{
+
+font-size:18px;
+
+}
+
+.footer-sub{
+
+font-size:12px;
+
+}
+
+.footer-credit{
+
+font-size:11px;
+
+}
+
+
+/* ลด glow */
+
+.container,
+.status-panel,
+.footer{
+
+box-shadow:
+0 0 12px
+rgba(34,211,238,0.12);
 
 }
 
