@@ -916,10 +916,46 @@ let currentAdminPassword = null;
 
 let myReportId = null;
 
+let soundEnabled = false;
 
-// โหลดงาน
+
+/* =========================
+   ENABLE SOUND
+========================= */
+
+function enableSound(){
+
+if(soundEnabled) return;
+
+soundEnabled = true;
+
+const notify =
+document.getElementById(
+"notifySound"
+);
+
+notify.volume = 1;
+
+notify.play()
+.then(()=>{
+
+notify.pause();
+
+notify.currentTime = 0;
+
+})
+.catch(()=>{});
+
+}
+
+
+/* =========================
+   LOAD REPORTS
+========================= */
 
 async function loadReports(){
+
+try{
 
 const response =
 await fetch(API_URL + "/reports");
@@ -928,7 +964,7 @@ reports =
 await response.json();
 
 
-// เสียงแจ้งเตือน
+/* แจ้งเตือน */
 
 if(reports.length > lastReportCount){
 
@@ -937,9 +973,15 @@ lastReportCount !== 0 &&
 currentAdminPassword
 ){
 
-document
-.getElementById("notifySound")
-.play();
+const notify =
+document.getElementById(
+"notifySound"
+);
+
+notify.currentTime = 0;
+
+notify.play()
+.catch(()=>{});
 
 }
 
@@ -952,12 +994,22 @@ renderReports();
 
 updateTracking();
 
+}catch(err){
+
+console.log(err);
+
+}
+
 }
 
 
-// โหลดแอดมิน
+/* =========================
+   LOAD ADMINS
+========================= */
 
 async function loadAdmins(){
+
+try{
 
 const response =
 await fetch(API_URL + "/admins");
@@ -978,11 +1030,22 @@ list.innerHTML += `
 
 <div class="admin-card">
 
-<div>${admin.name}</div>
+<div style="
+font-weight:bold;
+margin-bottom:6px;
+">
+${admin.name}
+</div>
 
-<div>${admin.status}</div>
+<div>
+${admin.status}
+</div>
 
-<div style="font-size:12px;">
+<div style="
+font-size:12px;
+margin-top:6px;
+opacity:0.8;
+">
 🕒 ${admin.lastOnline || "-"}
 </div>
 
@@ -992,10 +1055,18 @@ list.innerHTML += `
 
 });
 
+}catch(err){
+
+console.log(err);
+
+}
+
 }
 
 
-// render งาน
+/* =========================
+   RENDER REPORTS
+========================= */
 
 function renderReports(){
 
@@ -1049,7 +1120,9 @@ onclick="finishJob(${index})">
 }
 
 
-// Tracking
+/* =========================
+   TRACKING
+========================= */
 
 function updateTracking(){
 
@@ -1076,9 +1149,12 @@ if(!myReportId){
 trackingStatus.innerHTML =
 "ไม่มีงาน";
 
-if(warning)
+if(warning){
+
 warning.style.display =
 "none";
+
+}
 
 waitingSound.pause();
 
@@ -1100,9 +1176,12 @@ if(!report){
 trackingStatus.innerHTML =
 "✅ งานเสร็จแล้ว";
 
-if(warning)
+if(warning){
+
 warning.style.display =
 "none";
+
+}
 
 waitingSound.pause();
 
@@ -1113,13 +1192,19 @@ return;
 }
 
 
+/* update status */
+
 trackingStatus.innerHTML =
 report.status;
 
 
-// ถ้ายังรอ
+/* waiting */
 
-if(report.status.includes("รอดำเนินการ")){
+if(
+report.status.includes(
+"รอดำเนินการ"
+)
+){
 
 if(warning){
 
@@ -1128,7 +1213,10 @@ warning.style.display =
 
 }
 
-waitingSound.play();
+waitingSound.volume = 0.3;
+
+waitingSound.play()
+.catch(()=>{});
 
 }else{
 
@@ -1148,7 +1236,9 @@ waitingSound.currentTime = 0;
 }
 
 
-// ซ่อนหน้า
+/* =========================
+   HIDE PAGE
+========================= */
 
 function hideAllPages(){
 
@@ -1163,7 +1253,9 @@ el.classList.add("hidden");
 }
 
 
-// หน้าแรก
+/* =========================
+   HOME
+========================= */
 
 function goHome(){
 
@@ -1185,9 +1277,13 @@ document
 }
 
 
-// USER PAGE
+/* =========================
+   USER PAGE
+========================= */
 
 function openUserPage(){
+
+enableSound();
 
 hideAllPages();
 
@@ -1198,7 +1294,9 @@ document
 }
 
 
-// TRACKING PAGE
+/* =========================
+   TRACKING PAGE
+========================= */
 
 function openTracking(){
 
@@ -1208,23 +1306,18 @@ document
 .getElementById("trackingPage")
 .classList.remove("hidden");
 
-const waitingSound =
-document.getElementById(
-"waitingSound"
-);
-
-waitingSound.volume = 0.3;
-
-waitingSound.play();
-
 updateTracking();
 
 }
 
 
-// ADMIN LOGIN
+/* =========================
+   ADMIN LOGIN
+========================= */
 
 function openAdminLogin(){
+
+enableSound();
 
 hideAllPages();
 
@@ -1235,7 +1328,9 @@ document
 }
 
 
-// LOGIN
+/* =========================
+   LOGIN
+========================= */
 
 function loginAdmin(){
 
@@ -1267,7 +1362,9 @@ document
 }
 
 
-// ส่งแจ้ง
+/* =========================
+   SEND REPORT
+========================= */
 
 async function sendReport(){
 
@@ -1288,6 +1385,7 @@ return;
 
 }
 
+try{
 
 const response =
 await fetch(API_URL + "/report",{
@@ -1306,7 +1404,6 @@ problem
 
 });
 
-
 const data =
 await response.json();
 
@@ -1318,20 +1415,31 @@ document.getElementById("name").value="";
 document.getElementById("room").value="";
 document.getElementById("problem").value="";
 
-
 await loadReports();
 
 openTracking();
 
+}catch(err){
+
+alert("ส่งข้อมูลไม่สำเร็จ");
+
+console.log(err);
+
+}
+
 }
 
 
-// รับงาน
+/* =========================
+   ACCEPT JOB
+========================= */
 
 async function acceptJob(index){
 
 const report =
 reports[index];
+
+try{
 
 await fetch(API_URL + "/accept",{
 
@@ -1353,19 +1461,33 @@ admins[currentAdminPassword]
 
 });
 
+await changeMyStatus(
+"🔴 ไม่ว่าง"
+);
+
 loadReports();
 
 loadAdmins();
 
+}catch(err){
+
+console.log(err);
+
+}
+
 }
 
 
-// งานเสร็จ
+/* =========================
+   FINISH JOB
+========================= */
 
 async function finishJob(index){
 
 const report =
 reports[index];
+
+try{
 
 await fetch(API_URL + "/finish",{
 
@@ -1387,16 +1509,33 @@ admins[currentAdminPassword]
 
 });
 
+await changeMyStatus(
+"🟢 ว่าง"
+);
+
 loadReports();
 
 loadAdmins();
 
+}catch(err){
+
+console.log(err);
+
+}
+
 }
 
 
-// เปลี่ยนสถานะ
+/* =========================
+   CHANGE STATUS
+========================= */
 
 async function changeMyStatus(status){
+
+if(!currentAdminPassword)
+return;
+
+try{
 
 await fetch(API_URL + "/admin-status",{
 
@@ -1420,10 +1559,18 @@ status
 
 loadAdmins();
 
+}catch(err){
+
+console.log(err);
+
+}
+
 }
 
 
-// REALTIME
+/* =========================
+   REALTIME
+========================= */
 
 setInterval(()=>{
 
@@ -1433,6 +1580,8 @@ loadAdmins();
 
 },3000);
 
+
+/* START */
 
 loadReports();
 
